@@ -41,6 +41,7 @@ using FlipWebApps.GameFramework.Scripts.Messaging;
 using FlipWebApps.GameFramework.Scripts.GameStructure.Game.Messages;
 using FlipWebApps.GameFramework.Scripts.Preferences;
 using FlipWebApps.GameFramework.Scripts.GameStructure.Players.Messages;
+using FlipWebApps.GameFramework.Scripts.GameStructure.MultiPurposeGameItems.ObjectModel;
 
 #if BEAUTIFUL_TRANSITIONS
 using FlipWebApps.BeautifulTransitions.Scripts.Transitions;
@@ -457,6 +458,12 @@ namespace FlipWebApps.GameFramework.Scripts.GameStructure
         /// </summary>
         public GameItemsManager<Level, GameItem> Levels { get; set; }
 
+        /// <summary>
+        /// GameItemManager containing the current MultiPurposeGameItems
+        /// </summary>
+        public GameItemsManager<MultiPurposeGameItem, GameItem> MultiPurposeGameItems { get; set; }
+
+        
         #endregion GameManager properties
         #region Messaging properties 
 
