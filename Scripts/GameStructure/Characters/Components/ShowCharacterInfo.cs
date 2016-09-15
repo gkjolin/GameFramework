@@ -25,10 +25,10 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
-namespace FlipWebApps.GameFramework.Scripts.GameStructure.Levels.Components
+namespace FlipWebApps.GameFramework.Scripts.GameStructure.Characters.Components
 {
     /// <summary>
-    /// Show information about the currently selected character
+    /// Show information about the currently selected character in a UI Text component
     /// </summary>
     [RequireComponent(typeof(Text))]
     [AddComponentMenu("Game Framework/GameStructure/Characters/ShowCharacterInfo")]
