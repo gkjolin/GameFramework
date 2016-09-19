@@ -28,7 +28,7 @@ using FlipWebApps.GameFramework.Scripts.GameStructure.Worlds.ObjectModel;
 using FlipWebApps.GameFramework.Scripts.UI.Dialogs.Components;
 using System;
 using FlipWebApps.GameFramework.Scripts.Preferences;
-using FlipWebApps.GameFramework.Scripts.GameStructure.MultiPurposeGameItems.ObjectModel;
+using FlipWebApps.GameFramework.Scripts.GameStructure.GenericGameItems.ObjectModel;
 using FlipWebApps.GameFramework.Scripts.GameStructure.GameItems.ObjectModel;
 using FlipWebApps.GameFramework.Scripts.GameStructure.GameItems;
 using FlipWebApps.GameFramework.Scripts.Messaging;
@@ -83,8 +83,8 @@ namespace FlipWebApps.GameFramework.Scripts.Billing
             else if (productId.StartsWith("unlock.character."))
                 PurchaseGameItem<Character>(productId, "unlock.character.", () => GameManager.Instance.Characters, number => new CharacterPurchasedMessage(number));
 
-            else if (productId.StartsWith("unlock.multipurpose."))
-                PurchaseGameItem<MultiPurposeGameItem>(productId, "unlock.multipurpose.", () => GameManager.Instance.MultiPurposeGameItems, number => new MultiPurposeGameItemPurchasedMessage(number));
+            else if (productId.StartsWith("unlock.genericgameitem."))
+                PurchaseGameItem<GenericGameItem>(productId, "unlock.genericgameitem.", () => GameManager.Instance.GenericGameItems, number => new GenericGameItemPurchasedMessage(number));
 
             // finally send the generic påurchased message.
             GameManager.SafeQueueMessage(new ItemPurchasedMessage(productId));

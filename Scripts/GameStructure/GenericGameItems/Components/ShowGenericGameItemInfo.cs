@@ -19,27 +19,35 @@
 // TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //----------------------------------------------
 
-using FlipWebApps.GameFramework.Scripts.GameStructure.MultiPurposeGameItems.ObjectModel;
-using FlipWebApps.GameFramework.Scripts.GameStructure.GameItems.Components;
-using FlipWebApps.GameFramework.Scripts.GameStructure.GameItems.ObjectModel;
+using FlipWebApps.GameFramework.Scripts.Localisation;
 using UnityEngine;
+using UnityEngine.Assertions;
+using UnityEngine.UI;
 
-namespace FlipWebApps.GameFramework.Scripts.GameStructure.MultiPurposeGameItems.Components
+namespace FlipWebApps.GameFramework.Scripts.GameStructure.GenericGameItems.Components
 {
     /// <summary>
-    /// Creates instances of all Character Game Items
+    /// Show information about the currently selected GenericGameItem in a UI Text component
     /// </summary>
-    [AddComponentMenu("Game Framework/GameStructure/MultiPurposeGameItem/Create MultiPurposeGameItem Buttons")]
+    [RequireComponent(typeof(Text))]
+    [AddComponentMenu("Game Framework/GameStructure/Characters/Show GenericGameItem Info")]
     [HelpURL("http://www.flipwebapps.com/game-framework/")]
-    public class CreateMultiPurposeGameItemButtons : CreateGameItemButtons<MultiPurposeGameItemButton, MultiPurposeGameItem>
+    public class ShowGenericGameItemInfo : MonoBehaviour
     {
-        /// <summary>
-        /// Returns a list of all current MultiPurposeGameItem GameItems
-        /// </summary>
-        /// <returns></returns>
-        protected override GameItem[] GetGameItems()
+        [Tooltip("A localisation key or text string to use to dissplay. You can include the values:\n{0} - Number\n{0} - Name\n{0} - Description")]
+        public string Key;
+
+        void Awake()
         {
-            return GameManager.Instance.MultiPurposeGameItems.Items;
+            Assert.IsNotNull(GameManager.Instance.GenericGameItems, "GenericGameItems are not setup when referenced from ShowGenericGameItemInfo");
+
+            var GenericGameItem = GameManager.Instance.GenericGameItems.Selected;
+            if (GenericGameItem != null)
+            {
+                var _textComponent = GetComponent<Text>();
+                var text = LocaliseText.Exists(Key) ? LocaliseText.Get(Key) : Key;
+                _textComponent.text = string.Format(text, GenericGameItem.Number, GenericGameItem.Name, GenericGameItem.Description);
+            }
         }
     }
 }

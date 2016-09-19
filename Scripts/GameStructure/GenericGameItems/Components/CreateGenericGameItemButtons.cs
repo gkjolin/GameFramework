@@ -19,60 +19,27 @@
 // TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //----------------------------------------------
 
-#if UNITY_PURCHASING
-using FlipWebApps.GameFramework.Scripts.Billing.Components;
-#endif
-using FlipWebApps.GameFramework.Scripts.Billing.Messages;
-using FlipWebApps.GameFramework.Scripts.GameStructure.MultiPurposeGameItems.ObjectModel;
-using FlipWebApps.GameFramework.Scripts.GameStructure.GameItems;
+using FlipWebApps.GameFramework.Scripts.GameStructure.GenericGameItems.ObjectModel;
 using FlipWebApps.GameFramework.Scripts.GameStructure.GameItems.Components;
 using FlipWebApps.GameFramework.Scripts.GameStructure.GameItems.ObjectModel;
-using FlipWebApps.GameFramework.Scripts.Messaging;
 using UnityEngine;
 
-namespace FlipWebApps.GameFramework.Scripts.GameStructure.MultiPurposeGameItems.Components
+namespace FlipWebApps.GameFramework.Scripts.GameStructure.GenericGameItems.Components
 {
     /// <summary>
-    /// MultiPurposeGameItem Details Button
+    /// Creates instances of all Character Game Items
     /// </summary>
-    [AddComponentMenu("Game Framework/GameStructure/MultiPurposeGameItem/CharacterButton")]
+    [AddComponentMenu("Game Framework/GameStructure/GenericGameItem/Create GenericGameItem Buttons")]
     [HelpURL("http://www.flipwebapps.com/game-framework/")]
-    public class MultiPurposeGameItemButton : GameItemButton<MultiPurposeGameItem>
+    public class CreateGenericGameItemButtons : CreateGameItemButtons<GenericGameItemButton, GenericGameItem>
     {
-
-        public new void Awake()
-        {
-            base.Awake();
-            GameManager.SafeAddListener<CMultiPurposeGameItemPurchasedMessage>(MultiPurposeGameItemPurchasedHandler);
-        }
-
-        protected new void OnDestroy()
-        {
-            GameManager.SafeRemoveListener<MultiPurposeGameItemPurchasedMessage>(MultiPurposeGameItemPurchasedHandler);
-            base.OnDestroy();
-        }
-
-
         /// <summary>
-        /// Handler for MultiPurposeGameItem purchase messages
-        /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        bool MultiPurposeGameItemPurchasedHandler(BaseMessage message)
-        {
-            var multiPurposeGameItemPurchasedMessage = message as MultiPurposeGameItemPurchasedMessage;
-            UnlockIfNumberMatches(multiPurposeGameItemPurchasedMessage.Number);
-            return true;
-        }
-
-
-        /// <summary>
-        /// Returns the GameItemsMaager that holds MultiPurposeGameItems
+        /// Returns a list of all current GenericGameItem GameItems
         /// </summary>
         /// <returns></returns>
-        protected override GameItemsManager<MultiPurposeGameItem, GameItem> GetGameItemsManager()
+        protected override GameItem[] GetGameItems()
         {
-            return GameManager.Instance.MultiPurposeGameItems;
+            return GameManager.Instance.GenericGameItems.Items;
         }
     }
 }

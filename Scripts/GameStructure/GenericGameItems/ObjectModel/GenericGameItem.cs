@@ -19,32 +19,25 @@
 // TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //----------------------------------------------
 
-using FlipWebApps.GameFramework.Scripts.Messaging;
+using FlipWebApps.GameFramework.Scripts.GameStructure.GameItems.ObjectModel;
 
-namespace FlipWebApps.GameFramework.Scripts.Billing.Messages
+namespace FlipWebApps.GameFramework.Scripts.GameStructure.GenericGameItems.ObjectModel
 {
     /// <summary>
-    /// A message that is generated when a MultiPurposeGameItem is purchased.
+    /// Generic Game Item
     /// </summary>
-    public class MultiPurposeGameItemPurchasedMessage : BaseMessage
+    public class GenericGameItem : GameItem
     {
         /// <summary>
-        /// The number of the MultiPurposeGameItem that was purchased
+        /// Override for this GameItem type
         /// </summary>
-        public readonly int Number;
-
-        public MultiPurposeGameItemPurchasedMessage(int number)
-        {
-            Number = number;
-        }
+        public override string IdentifierBase { get { return "GenericGameItem"; } }
 
         /// <summary>
-        /// Return a representation of the message
+        /// Override for this GameItem type
         /// </summary>
-        /// <returns></returns>
-        public override string ToString()
-        {
-            return string.Format("MultiPurposeGameItem Purchased {0}", Number);
-        }
+        public override string IdentifierBasePrefs { get { return "GGI"; } }
+
+        public GenericGameItem() { }
     }
 }

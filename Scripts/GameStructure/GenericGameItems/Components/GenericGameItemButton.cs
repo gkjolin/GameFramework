@@ -19,28 +19,60 @@
 // TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //----------------------------------------------
 
-using FlipWebApps.GameFramework.Scripts.GameStructure.MultiPurposeGameItems.ObjectModel;
+#if UNITY_PURCHASING
+using FlipWebApps.GameFramework.Scripts.Billing.Components;
+#endif
+using FlipWebApps.GameFramework.Scripts.Billing.Messages;
+using FlipWebApps.GameFramework.Scripts.GameStructure.GenericGameItems.ObjectModel;
 using FlipWebApps.GameFramework.Scripts.GameStructure.GameItems;
 using FlipWebApps.GameFramework.Scripts.GameStructure.GameItems.Components;
 using FlipWebApps.GameFramework.Scripts.GameStructure.GameItems.ObjectModel;
+using FlipWebApps.GameFramework.Scripts.Messaging;
 using UnityEngine;
 
-namespace FlipWebApps.GameFramework.Scripts.GameStructure.MultiPurposeGameItems.Components
+namespace FlipWebApps.GameFramework.Scripts.GameStructure.GenericGameItems.Components
 {
     /// <summary>
-    /// Unlock GameItem button for MultiPurposeGameItems 
+    /// GenericGameItem Details Button
     /// </summary>
-    [AddComponentMenu("Game Framework/GameStructure/MultiPurposeGameItem/Unlock MultiPurposeGameItem Button")]
+    [AddComponentMenu("Game Framework/GameStructure/GenericGameItem/CharacterButton")]
     [HelpURL("http://www.flipwebapps.com/game-framework/")]
-    public class UnlockMultiPurposeGameItemButton : UnlockGameItemButton<MultiPurposeGameItem>
+    public class GenericGameItemButton : GameItemButton<GenericGameItem>
     {
+
+        public new void Awake()
+        {
+            base.Awake();
+            GameManager.SafeAddListener<GenericGameItemPurchasedMessage>(GenericGameItemPurchasedHandler);
+        }
+
+        protected new void OnDestroy()
+        {
+            GameManager.SafeRemoveListener<GenericGameItemPurchasedMessage>(GenericGameItemPurchasedHandler);
+            base.OnDestroy();
+        }
+
+
         /// <summary>
-        /// Returns the GameItemsMaager that holds MultiPurposeGameItems
+        /// Handler for GenericGameItem purchase messages
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        bool GenericGameItemPurchasedHandler(BaseMessage message)
+        {
+            var GenericGameItemPurchasedMessage = message as GenericGameItemPurchasedMessage;
+            UnlockIfNumberMatches(GenericGameItemPurchasedMessage.Number);
+            return true;
+        }
+
+
+        /// <summary>
+        /// Returns the GameItemsMaager that holds GenericGameItems
         /// </summary>
         /// <returns></returns>
-        protected override GameItemsManager<MultiPurposeGameItem, GameItem> GetGameItemsManager()
+        protected override GameItemsManager<GenericGameItem, GameItem> GetGameItemsManager()
         {
-            return GameManager.Instance.MultiPurposeGameItems;
+            return GameManager.Instance.GenericGameItems;
         }
     }
 }

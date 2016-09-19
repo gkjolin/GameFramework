@@ -19,35 +19,28 @@
 // TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //----------------------------------------------
 
-using FlipWebApps.GameFramework.Scripts.Localisation;
+using FlipWebApps.GameFramework.Scripts.GameStructure.GenericGameItems.ObjectModel;
+using FlipWebApps.GameFramework.Scripts.GameStructure.GameItems;
+using FlipWebApps.GameFramework.Scripts.GameStructure.GameItems.Components;
+using FlipWebApps.GameFramework.Scripts.GameStructure.GameItems.ObjectModel;
 using UnityEngine;
-using UnityEngine.Assertions;
-using UnityEngine.UI;
 
-namespace FlipWebApps.GameFramework.Scripts.GameStructure.MultiPurposeGameItems.Components
+namespace FlipWebApps.GameFramework.Scripts.GameStructure.GenericGameItems.Components
 {
     /// <summary>
-    /// Show information about the currently selected MultiPurposeGameItem in a UI Text component
+    /// Unlock GameItem button for GenericGameItems 
     /// </summary>
-    [RequireComponent(typeof(Text))]
-    [AddComponentMenu("Game Framework/GameStructure/Characters/Show MultiPurposeGameItem Info")]
+    [AddComponentMenu("Game Framework/GameStructure/GenericGameItem/Unlock GenericGameItem Button")]
     [HelpURL("http://www.flipwebapps.com/game-framework/")]
-    public class ShowMultiPurposeGameItemInfo : MonoBehaviour
+    public class UnlockGenericGameItemButton : UnlockGameItemButton<GenericGameItem>
     {
-        [Tooltip("A localisation key or text string to use to dissplay. You can include the values:\n{0} - Number\n{0} - Name\n{0} - Description")]
-        public string Key;
-
-        void Awake()
+        /// <summary>
+        /// Returns the GameItemsMaager that holds GenericGameItems
+        /// </summary>
+        /// <returns></returns>
+        protected override GameItemsManager<GenericGameItem, GameItem> GetGameItemsManager()
         {
-            Assert.IsNotNull(GameManager.Instance.MultiPurposeGameItems, "MultiPurposeGameItems are not setup when referenced from ShowMultiPurposeGameItemInfo");
-
-            var multiPurposeGameItem = GameManager.Instance.MultiPurposeGameItems.Selected;
-            if (multiPurposeGameItem != null)
-            {
-                var _textComponent = GetComponent<Text>();
-                var text = LocaliseText.Exists(Key) ? LocaliseText.Get(Key) : Key;
-                _textComponent.text = string.Format(text, multiPurposeGameItem.Number, multiPurposeGameItem.Name, multiPurposeGameItem.Description);
-            }
+            return GameManager.Instance.GenericGameItems;
         }
     }
 }
